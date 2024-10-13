@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Study Planner</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Enter Study Time</h1>
+    <input type="number" id="study-time" step="0.1">
+    <button onclick="getRecommendation()">Submit</button>
+    <div id="result"></div>
+
+    <script>
+    function getRecommendation() {
+        let studyTime = $('#study-time').val();
+        $.ajax({
+            url: '/recommend',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ study_time: studyTime }),
+            success: function(response) {
+                $('#result').text('Predicted Completion: ' + response.completion_percentage + '%');
+            }
+        });
+    }
+    </script>
+</body>
+</html>
